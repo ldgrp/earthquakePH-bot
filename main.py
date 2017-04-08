@@ -96,7 +96,7 @@ if __name__ == '__main__':
 			wr = csv.writer(f, delimiter=',')
 			wr.writerow(["Earthquake IDs"])
 		print ('[EQBot] Cache created.')
-	api.send_direct_message('leoorpillaiii', "i think i love you :)")
+	api.send_direct_message('im_a_leo_', text="i think i love you :)")
 	while True:
 		main()
 		print('[EQBot] Sleeping for %s seconds' % DELAY_LENGTH)
