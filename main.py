@@ -90,11 +90,12 @@ def main():
 if __name__ == '__main__':
 
 	if not os.path.exists(CACHE):
+		print ('[EQBot] Cache not found.')
+		
 		with open(CACHE, 'w') as f:
 			wr = csv.writer(f, delimiter=',')
 			wr.writerow(["Earthquake IDs"])
-		print ('[EQBot] Cache not found.\n[EQBot] Cache created.')
-
+		print ('[EQBot] Cache created.')
 	while True:
 		main()
 		print('[EQBot] Sleeping for %s seconds' % DELAY_LENGTH)
