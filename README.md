@@ -11,11 +11,14 @@ Dependency
 
 You will need to install Python 3 on your system. After that, you will also need the [tweepy](https://github.com/tweepy/tweepy) and [requests](https://github.com/kennethreitz/requests) library. You can do so by running the following commands:
 
-```pip install tweepy
+```
+pip install tweepy
 pip install requests
 ```
 
 Usage
 -------
-Once you've provided the necessary API keys, run the bot from the commandline
-```python main.py```
+Once you've provided the necessary API keys, run the bot from the commandline:
+```
+python main.py
+```
