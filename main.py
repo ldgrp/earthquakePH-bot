@@ -81,7 +81,7 @@ def main():
 				log_id(item['id'])
 				eqdata = EQData(item)
 				lat, lon = eqdata.lat, eqdata.lon
-				# api.update_status(s.sentence(), lat=lat, long=lon)
+				api.update_status(eqdata.to_sentence(), lat=lat, long=lon)
 
 				print("[TWEET] ", eqdata.to_sentence())
 	else:
