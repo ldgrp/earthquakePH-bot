@@ -39,9 +39,10 @@ def filter_by_country(json, country):
 	for item in json:
 		lat = item['geometry']['coordinates'][1]
 		lon = item['geometry']['coordinates'][0]
-		
-		if get_country(lat,lon) == country:
+		place = item['properties']['place']
+		if 'Philippines' in place:
 			result.append(item)
+			print("[EQBot] Earthquake %s detected" % item['id'])
 
 	return result
 
@@ -78,12 +79,13 @@ def main():
 		eq_dict = filter_by_country(r.json()['features'], "Philippines")
 		for item in eq_dict:
 			if(check_duplicate_id(item['id'])) == False:
-				log_id(item['id'])
 				eqdata = EQData(item)
 				lat, lon = eqdata.lat, eqdata.lon
-				api.update_status(eqdata.to_sentence(), lat=lat, long=lon)
-
-				print("[TWEET] ", eqdata.to_sentence())
+				time.sleep(1)
+				sentence = eqdata.to_sentence()
+				print("[TWEET] ", sentence)
+				api.update_status(sentence, lat=lat, long=lon)
+				log_id(item['id'])
 	else:
 		print('[EQBot] ERROR: %s' % r.status_code)
 
@@ -91,7 +93,6 @@ if __name__ == '__main__':
 
 	if not os.path.exists(CACHE):
 		print ('[EQBot] Cache not found.')
-		
 		with open(CACHE, 'w') as f:
 			wr = csv.writer(f, delimiter=',')
 			wr.writerow(["Earthquake IDs"])

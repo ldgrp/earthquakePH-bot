@@ -1,5 +1,7 @@
-import re
+import os
+
 from datetime import datetime, timezone, timedelta
+from pyshorteners import Shortener
 
 class EQData():
     def __init__(self, input):
@@ -33,7 +35,16 @@ class EQData():
         time = datetime.fromtimestamp(self.time/1000, tz=timezone(timedelta(hours=8)))
         return time.strftime("%I:%M%p")
 
+    def url_shorten(self):
+        # shortener = Shortener('Tinyurl')
+        shortener = Shortener('Google', api_key=os.environ['API_KEY'])
+        return shortener.short(self.url)
+
     def to_sentence(self):
         """Makes the ugly json readable"""
-        return "A magnitude %s earthquake hits %s at %s UTC+8 (%s minutes ago) - Details %s #earthquakePH" \
-        % (self.magnitude, self.place, self.ftime(), self.minutes_ago(), self.url)
+        sentence = "A magnitude %s earthquake hits %s at %s UTC+8 (%sm ago) - Details %s #earthquakePH" \
+        % (self.magnitude, self.place, self.ftime(), self.minutes_ago(), self.url_shorten())
+
+        if len(sentence) > 140:
+            sentence = sentence.replace("Philippines", "PH")
+        return sentence
